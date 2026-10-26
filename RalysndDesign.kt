@@ -20,14 +20,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
- * RALYSND MOCKUP LAYOUT 2026 — shared dark-glass design system.
+ * RALYSND PROFESSIONAL MOCKUP v3 — shared restrained design system.
  *
- * Approved dark mockup: deep charcoal background, dark glass cards with a
- * thin outline, emerald primary and violet secondary, and a glowing
- * emerald-to-violet gradient for the connect control. Presentation only:
- * no navigation, ViewModel, protocol, database, or permission logic lives
- * here, and no sample data is produced here — every card renders the
- * real values its caller passes in.
+ * Approved professional mockup: sophisticated dark charcoal background
+ * (#0B0F16), generous whitespace, thin outlines, 16dp card corners,
+ * emerald primary and violet secondary, and a THIN gradient ring for
+ * the connect control — no glow overload, no cartoon, no mascot.
+ * Presentation only: no navigation, ViewModel, protocol, database, or
+ * permission logic lives here, and no sample data is produced here —
+ * every card renders the real values its caller passes in.
  */
 
 /** Emerald -> violet gradient used for the connect control and accents. */
@@ -35,7 +36,7 @@ fun ralysndGradientBrush(): Brush = Brush.linearGradient(
     colors = listOf(RalysndEmerald, RalysndViolet)
 )
 
-/** Dark glass card: charcoal surface, thin outline, 24dp corners. */
+/** Dark glass card: charcoal surface, thin outline, 16dp corners. */
 @Composable
 fun RalysndGlassCard(
     modifier: Modifier = Modifier,
@@ -43,7 +44,7 @@ fun RalysndGlassCard(
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val shape = RoundedCornerShape(24.dp)
+    val shape = RoundedCornerShape(16.dp)
     val borderColor = if (selected) RalysndEmeraldBright else RalysndOutline
     val clickModifier = if (onClick != null) {
         Modifier.clickable(onClick = onClick)
@@ -65,9 +66,11 @@ fun RalysndGlassCard(
 }
 
 /**
- * Soft ambient glows for the home screen background: violet at the top
- * right, emerald at the bottom left. [glowScale] lets the caller pulse
- * them gently with the connection animation; values near 1f are static.
+ * Barely-there ambient tint for the home screen background (professional
+ * mockup v3 is deliberately restrained): a faint violet tint at the
+ * top right and a faint emerald tint at the bottom left. [glowScale]
+ * lets the caller pulse them gently with the connection animation;
+ * values near 1f are static.
  */
 @Composable
 fun RalysndGlowBackground(
@@ -77,12 +80,12 @@ fun RalysndGlowBackground(
     Box(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
-                .size((300 * glowScale).dp)
+                .size((260 * glowScale).dp)
                 .offset(x = 180.dp, y = (-80).dp)
                 .background(
                     Brush.radialGradient(
                         colors = listOf(
-                            RalysndViolet.copy(alpha = 0.28f),
+                            RalysndViolet.copy(alpha = 0.08f),
                             Color.Transparent
                         )
                     ),
@@ -91,12 +94,12 @@ fun RalysndGlowBackground(
         )
         Box(
             modifier = Modifier
-                .size((280 * glowScale).dp)
+                .size((240 * glowScale).dp)
                 .offset(x = (-140).dp, y = 480.dp)
                 .background(
                     Brush.radialGradient(
                         colors = listOf(
-                            RalysndEmerald.copy(alpha = 0.22f),
+                            RalysndEmerald.copy(alpha = 0.06f),
                             Color.Transparent
                         )
                     ),

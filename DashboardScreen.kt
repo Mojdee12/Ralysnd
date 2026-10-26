@@ -330,19 +330,18 @@ fun DashboardScreen(
                         ),
                         color = MaterialTheme.colorScheme.onBackground
                     )
-                }
-                // RALYSND MOCKUP 2026: emerald-to-violet accent bar under the
-                // top-bar title, matching the connect gradient.
-                androidx.compose.foundation.layout.Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(4.dp)
-                        .padding(end = 220.dp)
-                        .background(
-                            com.kunk.singbox.ui.theme.ralysndGradientBrush(),
-                            androidx.compose.foundation.shape.RoundedCornerShape(2.dp)
+                    // RALYSND PROFESSIONAL MOCKUP v3: clean white wordmark
+                    // with a small emerald "Protected" indicator at the far
+                    // right while connected — no accent bar underneath.
+                    if (connectionState == ConnectionState.Connected) {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Text(
+                            text = "• Protected",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = Color(0xFF34D399)
                         )
-                )
+                    }
+                }
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),

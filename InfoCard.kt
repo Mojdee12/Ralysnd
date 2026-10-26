@@ -1,6 +1,5 @@
 package com.kunk.singbox.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -8,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,9 +40,6 @@ import com.kunk.singbox.ui.theme.liquidGlassProgressTrackColor
 import com.kunk.singbox.ui.theme.RalysndEmerald
 import com.kunk.singbox.ui.theme.RalysndEmeraldBright
 import com.kunk.singbox.ui.theme.RalysndGlassCard
-import com.kunk.singbox.ui.theme.RalysndOutline
-import com.kunk.singbox.ui.theme.RalysndSurfaceAlt
-import com.kunk.singbox.ui.theme.RalysndVioletLight
 
 @Suppress("LongMethod")
 @Composable
@@ -131,70 +125,35 @@ fun InfoCard(
     }
     }
     if (!isLiquidGlassTheme()) {
-        RalysndGlassCard(modifier = containerModifier) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+        // RALYSND PROFESSIONAL MOCKUP v3: three separate slim, muted
+        // dark cards — Download, Upload, Ping, in that order — each with
+        // a small label above a clean value. Values are exactly the
+        // caller's live stats; the ping card stays tappable to retest.
+        Row(
+            modifier = containerModifier,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            RalysndGlassCard(modifier = Modifier.weight(1f)) {
+                RalysndInfoItem(
+                    label = stringResource(R.string.info_card_download),
+                    value = downloadSpeed
+                )
+            }
+            RalysndGlassCard(modifier = Modifier.weight(1f)) {
+                RalysndInfoItem(
+                    label = stringResource(R.string.info_card_upload),
+                    value = uploadSpeed
+                )
+            }
+            RalysndGlassCard(
+                modifier = Modifier.weight(1f),
+                onClick = if (onPingClick != null && !isPingLoading) onPingClick else null
             ) {
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    RalysndInfoItem(
-                        icon = Icons.Rounded.ArrowUpward,
-                        label = stringResource(R.string.info_card_upload),
-                        value = uploadSpeed,
-                        iconTint = RalysndEmeraldBright
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .fillMaxHeight()
-                        .background(RalysndOutline)
+                RalysndInfoItem(
+                    label = stringResource(R.string.info_card_ping),
+                    value = ping,
+                    isLoading = isPingLoading
                 )
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    RalysndInfoItem(
-                        icon = Icons.Rounded.ArrowDownward,
-                        label = stringResource(R.string.info_card_download),
-                        value = downloadSpeed,
-                        iconTint = RalysndVioletLight
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .fillMaxHeight()
-                        .background(RalysndOutline)
-                )
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Box(
-                        modifier = Modifier
-                            .size(72.dp)
-                            .clip(CircleShape)
-                            .then(
-                                if (onPingClick != null) {
-                                    Modifier.clickable(
-                                        enabled = !isPingLoading,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = ripple(bounded = true),
-                                        onClick = onPingClick
-                                    )
-                                } else {
-                                    Modifier
-                                }
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        RalysndInfoItem(
-                            icon = Icons.Rounded.Speed,
-                            label = stringResource(R.string.info_card_ping),
-                            value = ping,
-                            iconTint = RalysndEmerald,
-                            isLoading = isPingLoading
-                        )
-                    }
-                }
             }
         }
     }
@@ -202,27 +161,19 @@ fun InfoCard(
 
 @Composable
 private fun RalysndInfoItem(
-    icon: ImageVector,
     label: String,
     value: String,
-    iconTint: Color,
     isLoading: Boolean = false
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .clip(CircleShape)
-                .background(RalysndSurfaceAlt),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = iconTint,
-                modifier = Modifier.size(20.dp)
-            )
-        }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 14.dp)
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
         Spacer(modifier = Modifier.height(6.dp))
         Box(
             modifier = Modifier.height(24.dp),
@@ -244,11 +195,6 @@ private fun RalysndInfoItem(
                 )
             }
         }
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 

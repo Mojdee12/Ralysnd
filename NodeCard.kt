@@ -94,10 +94,10 @@ fun NodeCard(
         return String.format(java.util.Locale.US, "%.1f %s", value, units[unitIndex])
     }
 
-    // RALYSND MOCKUP 2026: dark glass server card, 24dp corners, emerald
+    // RALYSND MOCKUP 2026: dark glass server card, 16dp corners, emerald
     // border when selected. Name/type/latency/traffic are the caller's
     // real values; nothing here is sample data.
-    val shape = RoundedCornerShape(24.dp)
+    val shape = RoundedCornerShape(16.dp)
     val useLiquidGlass = isLiquidGlassTheme()
     val borderColor = if (isSelected) RalysndEmeraldBright else RalysndOutline
     val borderWidth = 1.dp
@@ -432,7 +432,7 @@ fun NodeGridCard(
     var showMenu by remember { mutableStateOf(false) }
     val gridInteractionSource = remember { MutableInteractionSource() }
 
-    val shape = RoundedCornerShape(24.dp)
+    val shape = RoundedCornerShape(16.dp)
     val useLiquidGlass = isLiquidGlassTheme()
     val borderColor = if (isSelected) {
         RalysndEmeraldBright
