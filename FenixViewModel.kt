@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunk.singbox.model.NodeUi
 import com.kunk.singbox.repository.ConfigRepository
+import com.kunk.singbox.repository.addSingleNode
+import com.kunk.singbox.repository.testNodeLatency
 import com.kunk.singbox.viewmodel.DashboardViewModel
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers
