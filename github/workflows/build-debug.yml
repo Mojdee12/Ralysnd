@@ -1,0 +1,40 @@
+name: Build Debug APK (Ralysnd)
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone upstream KunBox source
+        run: |
+          git lfs install
+          git clone --depth 1 https://github.com/roseforljh/singboxforandriod.git kunbox
+          ls kunbox/app/libs/libbox.aar
+      - name: Apply Ralysnd theme overlay and SDK 36
+        run: |
+          cp -r overlay/app/* kunbox/app/
+          sed -i 's/compileSdk = 37/compileSdk = 36/; s/targetSdk = 37/targetSdk = 36/' kunbox/app/build.gradle.kts
+          grep -E 'compileSdk|targetSdk' kunbox/app/build.gradle.kts
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - name: Build debug APK
+        run: |
+          cd kunbox
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --console=plain
+          find app/build/outputs/apk/debug -type f -name "*.apk" -exec ls -lh {} \;
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ralysnd-debug-apk
+          path: kunbox/app/build/outputs/apk/debug/*.apk
