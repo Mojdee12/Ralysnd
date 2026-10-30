@@ -1,0 +1,29 @@
+# DELETIONS.txt — FENIX rebuild (Go-core replacement)
+# Run on the build server in ~/kunbox BEFORE unzipping ralysnd-fenix-rebuild.zip.
+# Paths are relative to ~/kunbox. Use rm -rf for directories, rm -f for files.
+# Do NOT delete anything else. Do NOT touch sing-box/Configs code, libbox,
+# the RLY icon, the bento theme, or any other tab's files.
+#
+# Whole old-FENIX tree (Kotlin Foxy implementation):
+rm -rf app/src/main/java/com/kunk/singbox/foxy
+#
+# Old FENIX screen (replaced by GoCoreScreen.kt in the zip):
+rm -f app/src/main/java/com/kunk/singbox/ui/screens/FenixScreen.kt
+#
+# Old MIT license file for the deleted implementation (replaced by the
+# root LICENSE + CREDITS.md in the zip):
+rm -f FOXY-LICENSE.txt
+#
+# hev-socks5-tunnel native checkout, if present on the server (it is cloned
+# at build time by the deleted fetchHevSocks5Tunnel task; local source has
+# no src/main/jni dir, so this may already be absent — rm -f is safe):
+rm -rf app/src/main/jni
+#
+# After deletion, verify BEFORE unzipping:
+#   grep -r "foxy" app/src/main  -> must be 0 (case-insensitive)
+#   ls app/src/main/java/com/kunk/singbox/foxy -> No such file
+#
+# Then unzip ralysnd-fenix-rebuild.zip over ~/kunbox, and copy the trial
+# .aar BEFORE building:
+#   cp ~/armanlife-trial/core-trial.aar app/libs/core.aar
+# (The zip deliberately contains NO .aar.)
